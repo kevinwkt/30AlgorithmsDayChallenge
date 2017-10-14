@@ -8,15 +8,15 @@ int max(int a, int b){
 }
 
 int FindMaxSum(int arr[],int n){
-  int exclusive=0;
-  int inclusive=arr[0];
-  int newex=0;
+  int exclusive=0;  //Exclusive starts at 0 because at arr[1], we musn't take into account arr[0]
+  int inclusive=arr[0]; //Inclusive starts at arr[0]
+  int newex=0;  //Just a placeholder
   for(int i=1;i<n;i++){
-    newex=inclusive;
-    inclusive=max(inclusive,exclusive+arr[i]);
-    exclusive=newex;
+    newex=inclusive;  //Save the old inclusive for exclusive
+    inclusive=max(inclusive,exclusive+arr[i]);  //New inclusive will be the max of current high, and to see if new high
+    exclusive=newex;  //Exclusive will be the past high which is high until i-1
   }
-  return inclusive;
+  return inclusive; //Return inclusive because it is the highest at point N-1
 }
 
 int main(){
