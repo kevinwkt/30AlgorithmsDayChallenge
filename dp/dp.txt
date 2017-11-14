@@ -1,0 +1,116 @@
+
+
+Knapsack 0/1
+
+  //Basically, check max between taking x and sumUntil-x to see if its better than before.
+
+    Base case:
+
+    val|weight  0 1 2 3 4 5 6 7
+    1           0
+    3           0
+    5           0
+    9           0
+
+    if(j<wt[i]){
+      dp[i][j]=dp[i-1][j];
+    }else{
+      dp[i][j]=max(dp[i-1][j],val[i]+dp[i-1][j-wt[i]]);
+    }
+
+Longest Common Subsequence
+
+  //Start checking by character if the character will contribute, if it does it adds 1 diagonally, if not, max of above and below
+    //Example with abcdaf and acbcf, answer= abcf
+      Base case:
+
+      str1|str2 _ a b c d a f
+      _         0 0 0 0 0 0 0
+      a         0
+      c         0
+      b         0
+      c         0
+      f         0
+
+      if(str1[i]==str2[i]){
+        dp[i][j]=dp[i-1][j-1]+1;
+      }else{
+        dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+      }
+
+Subset Sum
+
+  //Check if you can reach sum of 0 to n, while you check if with given number x, you can reach the sum
+
+  Base case (T because we can get 0 sums):
+
+  set|sums 0 1 2 3 4 5 6 7 8 9
+  _        T F F F F F F F F F
+  2        T
+  3        T
+  7        T
+  8        T
+  10       T
+
+  if(j<input[i]){
+    dp[i][j]=dp[i-1][j];  //Get top
+  }else{
+    dp[i][j]=dp[i-1][j]||dp[i-1][j-input[i]]; //Get the top or possible sum
+  }
+
+Coin Changing
+
+  Base Case:
+    ArrSum:
+
+    0 1 2 3 4 5 6 7 8 9 n
+    0 -INF-INF-INF-INF-INF
+
+    ArrStep(Save the last coin used to get here):
+
+    0  1  2  3  4  5  6  7  8  9  n
+    -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+
+  Where(j is sum, i is coin):
+  dp[j]=min(dp[j],dp[j-val[i]]+1);
+
+LIS length
+  Base Case:
+    //Start everything at 1 and start from index 1
+
+    Given 3 4 -1 0 6 2 3
+          1 1  1 1 1 1 1
+
+    for(int i=1;i<arr.size();i++){
+      for(int j=0;j<i;j++){
+        if(arr[j]<arr[i]){
+          dp[i]=max(dp[j]+1,dp[i]);
+        }
+      }
+    }
+
+Minimum Edit Distance
+
+  //Operations to make 1 string to another
+
+  Given abcdef and azced
+
+
+  str1|str2 _ a b c d e f
+  _         0 1 2 3 4 5 6
+  a         1
+  z         2
+  c         3
+  e         4
+  d         5
+
+  //So we get minimum of of above (remove), left (insert), and diagonal to left (replace) if NOT SAME INPUT
+  //IF SAME INPUT, we get diagonal left because the new character does not need to be changed
+
+  if(str1[i]==str2[j]){
+    dp[i][j]=dp[i-1][j-1];
+  }else{
+    dp[i][j]=min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1;
+  }
+
+# of Coin Change for a sum
